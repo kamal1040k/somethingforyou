@@ -157,14 +157,27 @@
             color: #e91e63;
         }
 
-        /* Countdown Timer */
-        #timer {
-            font-family: 'Dancing Script', cursive; /* Use a romantic font for the timer */
-            font-size: 3.5rem;
-            color: #e91e63;
-            text-shadow: 0 0 10px rgba(233, 30, 99, 0.7);
+        /* Sweet Message */
+        #sweetMessage p {
+            font-family: 'Poppins', sans-serif; /* Keep consistent with body */
+            font-size: 1.6rem;
+            color: #4a4a4a;
             margin-top: 2rem;
+            line-height: 1.6;
+            max-width: 800px; /* Limit width for readability */
+            padding: 0 1rem;
+            text-align: center;
         }
+        
+        #sweetMessage span {
+            font-family: 'Dancing Script', cursive;
+            color: #e91e63;
+            font-size: 2.2rem;
+            display: block;
+            margin-top: 1.5rem;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+        }
+
 
         /* Background Animations - Hearts */
         .hearts {
@@ -266,8 +279,6 @@
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
-            /* This is where you would add your falling flower animations */
-            /* For example, create a JS function similar to createHearts() to spawn flower divs */
         }
 
         /* Mobile Responsiveness */
@@ -289,8 +300,14 @@
             ul {
                 font-size: 1rem;
             }
-            #timer {
-                font-size: 2.5rem;
+            ul li {
+                margin-bottom: 0.5rem;
+            }
+            #sweetMessage p {
+                font-size: 1.2rem;
+            }
+            #sweetMessage span {
+                font-size: 1.8rem;
             }
             .heart {
                 width: 18px;
@@ -332,8 +349,11 @@
             ul li {
                 padding-left: 1.2rem;
             }
-            #timer {
-                font-size: 2rem;
+            #sweetMessage p {
+                font-size: 1rem;
+            }
+            #sweetMessage span {
+                font-size: 1.5rem;
             }
         }
 
@@ -342,7 +362,8 @@
 <body>
 
 <div class="hearts"></div>
-<div class="flower-container"></div> <div class="balloon-container" style="left: 10vw; animation-duration: 25s; animation-delay: 1s;">
+<div class="flower-container"></div>
+<div class="balloon-container" style="left: 10vw; animation-duration: 25s; animation-delay: 1s;">
     <div class="balloon">
         <div class="love-letter-icon"></div>
     </div>
@@ -385,10 +406,10 @@
         <img src="2.jpg" alt="Memory 2">
         <img src="3.jpg" alt="Memory 3">
         <img src="4.jpg" alt="Memory 4">
-         <img src="5.jpg" alt="Memory 5">
+        <img src="5.jpg" alt="Memory 5">
         <img src="6.jpg" alt="Memory 6">
         <img src="7.jpg" alt="Memory 7">
-        </div>
+    </div>
     <button onclick="next('reasons')">Next</button>
 </section>
 
@@ -417,13 +438,21 @@
     <p style="font-size: 1.4rem; color: #4a4a4a; margin-top: 1rem;">
         तँ जे गर गर — म जस्तो भए पनि तिमीलाई कहिल्यै छोड्न सक्दिन।
     </p>
-    <button onclick="next('countdown')">Next</button>
+    <button onclick="next('sweetMessage')">Next</button>
 </section>
 
-<section id="countdown" class="hidden">
-    <h2>Love Day Countdown ⏳</h2>
-    <div id="timer"></div>
+<section id="sweetMessage" class="hidden">
+    <h2>My Dearest Susmita,</h2>
+    <p>
+        तिमी मेरो जीवनमा एउटा सुन्दर सपना जस्तै आएकी छौ। हरेक दिन, तिमी मेरो मुटुमा अझै गहिरो ठाउँ बनाउँदै जान्छौ।
+        तिम्रो हाँसो, तिम्रो कुरा गर्ने तरिका, तिम्रो साथ — यी सबै कुराले मलाई पूर्ण महसुस गराउँछ।
+        तिमी सधैं मेरो साथमा रहनु, र यो मायाको यात्रा सधैंभरि यस्तै सुन्दर बनिरहोस्।
+        तिम्रो लागि मेरो माया अगाध छ, कहिल्यै सकिने छैन।
+    </p>
+    <span>Love, Your One and Only ❤️</span>
+    <button onclick="redirectToFlowerPage()">End the Journey Here</button>
 </section>
+
 
 <script>
     let music;
@@ -436,6 +465,8 @@
             music.play().catch(e => console.log("Music play failed:", e)); // Handle potential autoplay issues
             document.getElementById('welcome').classList.add('hidden');
             document.getElementById('loveLetter').classList.remove('hidden');
+            // Store music state in session storage
+            sessionStorage.setItem('musicPlaying', 'true');
         } else {
             alert('Wrong password! Please try again.');
         }
@@ -445,13 +476,6 @@
     function next(id) {
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
-
-        // Special handling for countdown to redirect
-        if (id === 'countdown') {
-            setTimeout(() => {
-                window.location.href = 'flower.html'; // Redirect after 30 seconds
-            }, 30000);
-        }
     }
 
     // Function to handle gift password and display special content
@@ -483,25 +507,11 @@
         }
     }
 
-    /
-
-        // Calculate time components
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-
-        // Display the timer
-        if (diff > 0) {
-            document.getElementById('timer').innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
-        } else {
-            document.getElementById('timer').innerHTML = "It's Love Day!";
-        }
+    // Function to redirect to flower.html and ensure music continues
+    function redirectToFlowerPage() {
+        // Music state is already stored in sessionStorage from checkPassword
+        window.location.href = 'flower.html';
     }
-    // Update timer every second
-    setInterval(updateTimer, 1000);
-    // Call immediately to avoid initial delay
-    updateTimer();
 
     // Function to create floating hearts
     function createHearts() {
@@ -518,6 +528,15 @@
         }
     }
     createHearts(); // Call on page load
+
+    // Music persistence on page load (for flower.html and potentially this page on direct access)
+    document.addEventListener('DOMContentLoaded', () => {
+        music = document.getElementById('bgMusic');
+        const musicState = sessionStorage.getItem('musicPlaying');
+        if (musicState === 'true') {
+            music.play().catch(e => console.log("Music auto-play on load failed:", e));
+        }
+    });
 
     // You would implement a similar function for "Aline flowers" if you have images for them.
     /*
@@ -540,7 +559,6 @@
     }
     // createFlowers(); // Uncomment and call this if you implement flowers
     */
-
 </script>
 
 </body>
