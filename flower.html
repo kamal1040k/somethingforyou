@@ -1103,5 +1103,15 @@
             document.body.addEventListener('click', handleClick);
         };
     </script>
+    <audio id="bgMusic" src="love.mp3" loop preload="auto" autoplay muted></audio>
+
+<script>
+  // Sound start only after user interaction (required by browsers)
+  window.addEventListener('click', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.muted = false;
+    bgMusic.play();
+  }, { once: true });
+</script>
 </body>
 </html>
