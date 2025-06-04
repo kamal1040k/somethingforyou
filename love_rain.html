@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Love for You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff69b4; /* Hot Pink */
+            --light-pink: #ffc0cb; /* Light Pink */
+            --dark-background: #12001a; /* Deeper Purple-Black */
+            --text-color: #ffe4e1; /* Misty Rose */
+            --boom-gradient-start: #ff1493; /* Deep Pink */
+            --boom-gradient-end: rgba(255, 20, 147, 0); /* Transparent Deep Pink */
+            --star-color: #ffd700; /* Gold for stars */
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: var(--dark-background);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            text-align: center;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffc0cb" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto; /* Custom heart cursor */
+        }
+
+        .title-container {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: 90%; /* Make it more responsive */
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: var(--light-pink);
+            text-shadow: 0 0 20px var(--primary-pink), 0 0 40px var(--light-pink);
+            margin: 0;
+            animation: fadeInScale 2s ease-out forwards;
+            line-height: 1.1; /* Adjust line height for smaller screens */
+        }
+
+        p.subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1.5s forwards;
+        }
+
+        /* Mobile responsiveness for title */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem; /* Smaller font size on mobile */
+            }
+            p.subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            p.subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        span.love-text {
+            position: absolute;
+            font-size: 18px;
+            color: var(--primary-pink);
+            animation: fall linear infinite;
+            pointer-events: none;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.7);
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        span.star-particle {
+            position: absolute;
+            font-size: 12px;
+            color: var(--star-color);
+            animation: fallStar linear infinite;
+            pointer-events: none;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+            opacity: 0.8;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10%); opacity: 1; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+
+        @keyframes fallStar {
+            0% { transform: translateY(-10%); opacity: 0.8; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+
+        .boom {
+            position: absolute;
+            width: 0px; /* Start small */
+            height: 0px; /* Start small */
+            background: radial-gradient(circle at center, var(--boom-gradient-start) 10%, var(--boom-gradient-end) 70%);
+            border-radius: 50%;
+            opacity: 1; /* Start opaque */
+            transform: scale(0);
+            animation: boom-burst 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards; /* More explosive timing */
+            pointer-events: none;
+            filter: blur(0px); /* Start clear */
+        }
+
+        @keyframes boom-burst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+                width: 0px;
+                height: 0px;
+                filter: blur(0px);
+            }
+            30% {
+                transform: scale(1);
+                opacity: 1;
+                width: 180px; /* Rapid expansion */
+                height: 180px;
+                filter: blur(5px);
+            }
+            100% {
+                transform: scale(3.5); /* Larger final scale */
+                opacity: 0;
+                width: 180px;
+                height: 180px;
+                filter: blur(20px); /* More blur at end */
+            }
+        }
+
+        .kiss-emoji {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: kiss-fly 1.5s ease-out forwards;
+            pointer-events: none;
+            text-shadow: 0 0 10px var(--primary-pink);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        @keyframes kiss-fly {
+            0% {
+                transform: scale(0.5) translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.8) translateY(-200px) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="love.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="title-container">
+        <h1></h1>
+        <p class="subtitle"></p>
+    </div>
+
+    <script>
+        // Generate raining text
+        const loveMessages = [
+            'I love you', 'My darling', 'Forever yours', 'Sweetheart', 'You are my world',
+           'My only love',  'My soulmate', 'Kiss me',
+             'My everything', 'Love you endlessly', 'Thinking of you'
+        ];
+
+        for (let i = 0; i < 200; i++) { // Reduced count for performance on mobile
+            const span = document.createElement('span');
+            span.className = 'love-text';
+            span.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.top = Math.random() * -100 + 'vh';
+            span.style.fontSize = (14 + Math.random() * 24) + 'px';
+            span.style.animationDuration = (3 + Math.random() * 4) + 's';
+            span.style.animationDelay = (Math.random() * 5) + 's';
+            document.body.appendChild(span);
+        }
+
+        // Generate raining star particles
+        for (let i = 0; i < 50; i++) { // Moderate count for stars
+            const star = document.createElement('span');
+            star.className = 'star-particle';
+            star.textContent = '⭐'; // Star emoji
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * -100 + 'vh';
+            star.style.fontSize = (8 + Math.random() * 10) + 'px'; // Smaller star size
+            star.style.animationDuration = (4 + Math.random() * 5) + 's'; // Slower fall than text
+            star.style.animationDelay = (Math.random() * 8) + 's';
+            document.body.appendChild(star);
+        }
+
+        // On click/tap boom effect + kiss emojis
+        document.addEventListener('click', (e) => {
+            // Boom circle
+            const boom = document.createElement('div');
+            boom.className = 'boom';
+            // Center the boom effect accurately regardless of its size
+            boom.style.left = e.clientX + 'px';
+            boom.style.top = e.clientY + 'px';
+            // Set transform origin to center for correct scaling
+            boom.style.transformOrigin = 'center center';
+            document.body.appendChild(boom);
+            setTimeout(() => boom.remove(), 800); // Match animation duration
+
+            // Kiss emoji burst
+            const numberOfEmojis = 8 + Math.floor(Math.random() * 5);
+            for (let i = 0; i < numberOfEmojis; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'kiss-emoji';
+                emoji.textContent = '😘';
+                // Adjust emoji spread to be relative to its own size
+                emoji.style.left = (e.clientX - 15 + (Math.random() * 80 - 40)) + 'px';
+                emoji.style.top = (e.clientY - 15 + (Math.random() * 80 - 40)) + 'px';
+                emoji.style.fontSize = (1.8 + Math.random() * 2) + 'rem';
+                emoji.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
+                emoji.style.transform = `scale(0.5) translateY(0) rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), parseFloat(emoji.style.animationDuration) * 1000);
+            }
+        });
+    </script>
+</body>
+</html>

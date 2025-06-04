@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Love Rain</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+    }
+
+    span.love-text {
+      position: absolute;
+      font-size: 16px;
+      color: #ff69b4;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    .boom {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #ff69b4 30%, transparent 80%);
+      border-radius: 50%;
+      opacity: 0.6;
+      transform: scale(0);
+      animation: boom 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes boom {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .kiss-emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: kiss-fly 1.2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes kiss-fly {
+      0% {
+        transform: scale(0.5) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.8) translateY(-150px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<audio autoplay loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Generate raining text
+  for (let i = 0; i < 300; i++) {
+    const span = document.createElement('span');
+    span.className = 'love-text';
+    span.textContent = 'I love you';
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.top = Math.random() * -100 + 'vh';
+    span.style.fontSize = (12 + Math.random() * 20) + 'px';
+    span.style.animationDuration = (2 + Math.random() * 3) + 's';
+    document.body.appendChild(span);
+  }
+
+  // On click boom effect + kiss emojis
+  document.addEventListener('click', (e) => {
+    // Boom circle
+    const boom = document.createElement('div');
+    boom.className = 'boom';
+    boom.style.left = e.clientX - 100 + 'px';
+    boom.style.top = e.clientY - 100 + 'px';
+    document.body.appendChild(boom);
+    setTimeout(() => boom.remove(), 600);
+
+    // Kiss emoji burst
+    for (let i = 0; i < 10; i++) {
+      const emoji = document.createElement('div');
+      emoji.className = 'kiss-emoji';
+      emoji.textContent = '😘';
+      emoji.style.left = (e.clientX - 10 + (Math.random() * 60 - 30)) + 'px';
+      emoji.style.top = (e.clientY - 10 + (Math.random() * 60 - 30)) + 'px';
+      emoji.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 1200);
+    }
+  });
+</script>
+</body>
+</html>
